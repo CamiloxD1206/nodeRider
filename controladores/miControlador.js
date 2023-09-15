@@ -1,0 +1,1 @@
+import dataAprendiz from "../module/modeloRider";
