@@ -1,26 +1,32 @@
-import express  from "express";
+// Contenido de appRider.js (archivo principal)
+import express from "express";
 import cors from "cors";
-import  miRutaAprendiz  from "./routes/miRutaRider";
-import miBase from "./bases/miBaseRider";
+import miRutaAprendiz from "./routes/miRutaRider.js";
+import miBase from "./bases/miBaseRider.js";
+
 const app = express();
-// use usar objetossrs que tengo en librerias
-//get premite obtener ""
+const port = 8000;
+
+// Middleware
 app.use(cors());
 app.use(express.json());
-app.get('/',(req,res)=>{
+
+// Rutas
+app.get('/', (req, res) => {
     res.send("Hoy casi pierdo clase de node");
 });
 
-app.listen(8000,()=>{
-console.log('Conectada http://localhost:8000/');
-
-});
 app.use('/aprendices', miRutaAprendiz);
 
-try{
-await miBase.autenticate()
-console.log('conexion existosa')
-}catch{
-    console.log('error de conexion');
+// Iniciar servidor
+app.listen(port, () => {
+    console.log(`Conectada http://localhost:${port}/`);
+});
 
+// Conectar a la base de datos
+try {
+    await miBase.authenticate();
+    console.log('Conexión exitosa a la base de datos');
+} catch (error) {
+    console.error('Error de conexión a la base de datos:', error);
 }
